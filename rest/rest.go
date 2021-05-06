@@ -1,7 +1,7 @@
 package rest
 
 import (
-	"commons/logger"
+	"github.com/DawnBreather/go-commons/logger"
 	"github.com/go-resty/resty/v2"
 )
 
@@ -9,7 +9,7 @@ var _logger = logger.New()
 
 type REST struct {
 	endpoint string
-	payload string
+	payload  string
 }
 
 func (r *REST) SetEndpoint(url string) *REST {
@@ -17,12 +17,12 @@ func (r *REST) SetEndpoint(url string) *REST {
 	return r
 }
 
-func (r *REST) SetPayload(payload string) *REST{
+func (r *REST) SetPayload(payload string) *REST {
 	r.payload = payload
 	return r
 }
 
-func (r *REST) SubmitPOST() *resty.Response{
+func (r *REST) SubmitPOST() *resty.Response {
 	client := resty.New()
 	resp, err := client.R().
 		SetHeader("Content-Type", "application/json").
@@ -35,7 +35,7 @@ func (r *REST) SubmitPOST() *resty.Response{
 	return resp
 }
 
-func (r *REST) SubmitGET() *resty.Response{
+func (r *REST) SubmitGET() *resty.Response {
 	client := resty.New()
 	resp, err := client.R().
 		SetHeader("Accept", "application/json").

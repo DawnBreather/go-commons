@@ -1,4 +1,4 @@
-module commons
+module github.com/DawnBreather/go-commons
 
 go 1.13
 

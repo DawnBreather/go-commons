@@ -1,51 +1,50 @@
 package file
 
 import (
-	"commons/env_var"
-	"commons/logger"
-	"commons/placeholder"
 	"encoding/base64"
+	"github.com/DawnBreather/go-commons/env_var"
+	"github.com/DawnBreather/go-commons/logger"
+	"github.com/DawnBreather/go-commons/placeholder"
 	"io/ioutil"
 )
 
 var _logger = logger.New()
 
-type File struct{
+type File struct {
 	path    string
 	content []byte
 	base64  string
 }
 
-func (f File) GetPath() string{
+func (f File) GetPath() string {
 	return f.path
 }
-func (f File) GetContent() []byte{
+func (f File) GetContent() []byte {
 	return f.content
 }
-func (f File) GetBase64() string{
+func (f File) GetBase64() string {
 	return f.base64
 }
 
-func (f *File) SetPath(path string) *File{
+func (f *File) SetPath(path string) *File {
 	f.path = path
 	return f
 }
-func (f *File) SetContent(content []byte) *File{
+func (f *File) SetContent(content []byte) *File {
 	f.content = content
 	return f
 }
-func (f *File) SetBase64(b64string string) *File{
+func (f *File) SetBase64(b64string string) *File {
 	f.base64 = b64string
 	return f
 }
 
-
-func(f *File) ParseContentToBase64() *File{
+func (f *File) ParseContentToBase64() *File {
 	f.base64 = base64.StdEncoding.EncodeToString(f.content)
 	return f
 }
 
-func(f *File) ParseBase64ToContent() *File{
+func (f *File) ParseBase64ToContent() *File {
 	var err error
 	f.content, err = base64.StdEncoding.DecodeString(f.base64)
 	if err != nil {
@@ -54,7 +53,7 @@ func(f *File) ParseBase64ToContent() *File{
 	return f
 }
 
-func(f *File) ReadContent() *File {
+func (f *File) ReadContent() *File {
 	var err error
 	f.content, err = ioutil.ReadFile(f.path)
 	if err != nil {
@@ -63,7 +62,7 @@ func(f *File) ReadContent() *File {
 	return f
 }
 
-func (f *File) SaveTo(dstPath string) *File{
+func (f *File) SaveTo(dstPath string) *File {
 	var err error
 
 	if dstPath != "" {
@@ -81,11 +80,11 @@ func (f *File) SaveTo(dstPath string) *File{
 	return f
 }
 
-func (f *File) Save() *File{
+func (f *File) Save() *File {
 	return f.SaveTo(f.path)
 }
 
-func (f *File) ReplaceEnvVarsPlaceholder(prefix, suffix string) *File{
+func (f *File) ReplaceEnvVarsPlaceholder(prefix, suffix string) *File {
 	var p = placeholder.New(prefix, suffix, env_var.REGEX_MASK)
 	f.content = []byte(p.ReplacePlaceholdersWithEnvVars(string(f.content)))
 
