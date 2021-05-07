@@ -1,20 +1,20 @@
 package main
 
 import (
-	"commons/aws"
-	"commons/file"
-	"commons/rest"
 	"fmt"
+	"github.com/DawnBreather/go-commons/aws"
+	"github.com/DawnBreather/go-commons/file"
+	"github.com/DawnBreather/go-commons/rest"
 )
 
-func testFindFiles(){
+func testFindFiles() {
 	files := file.FindFiles(`c:\lab\buildtools\helpers\golang\commons\go\bin\test\find_files`, `([.]env([.][a-zA-Z0-9])*)|(docker-compose.yml)`)
 	for _, f := range files {
 		fmt.Println(f.Name())
 	}
 }
 
-func testBase64FilesConversion(){
+func testBase64FilesConversion() {
 	f := file.File{}
 	f.SetPath(`C:\lab\buildtools\helpers\golang\commons\go\bin\test\base64\invoice.pdf`).
 		ReadContent().
@@ -28,18 +28,17 @@ func testBase64FilesConversion(){
 		SaveTo(`C:\lab\buildtools\helpers\golang\commons\go\bin\test\base64\invoice_dst.pdf`)
 }
 
-func testReplaceEnvVarsPlaceholders(){
+func testReplaceEnvVarsPlaceholders() {
 	f := file.File{}
 	f.SetPath(`C:\lab\buildtools\helpers\golang\commons\go\bin\test\env_vars_placeholders\.env`).
 		ReadContent().
 		ReplaceEnvVarsPlaceholder("{{", "}}").
 		SaveTo(`C:\lab\buildtools\helpers\golang\commons\go\bin\test\env_vars_placeholders\.env_res`)
 
-
 	fmt.Println(string(f.GetContent()))
 }
 
-func testGetAutoscalingInstanceId(){
+func testGetAutoscalingInstanceId() {
 	a := aws.ASG{}
 	a.SetName("Backend").CollectInstances()
 	instances := a.GetInstances()
@@ -48,14 +47,14 @@ func testGetAutoscalingInstanceId(){
 	}
 }
 
-func testRest(){
+func testRest() {
 	r := rest.REST{}
 	r.SetEndpoint("https://3dnews.ru")
 	resp := r.SubmitGET()
 	fmt.Println(string(resp.Body()), resp.StatusCode())
 }
 
-func main(){
+func main() {
 	//testFindFiles()
 	//testBase64FilesConversion()
 	//testReplaceEnvVarsPlaceholders()
