@@ -14,6 +14,14 @@ const (
 	DIRECTORY
 )
 
+func (p *Path) SetPath(path string) *Path {
+	p.path = path
+	return p
+}
+func (p *Path) GetPath() string {
+	return p.path
+}
+
 func (p *Path) IsFileOrDir() (fileOrDir int, ok bool) {
 	fi, err := os.Stat(p.path)
 	if err != nil {
@@ -22,10 +30,8 @@ func (p *Path) IsFileOrDir() (fileOrDir int, ok bool) {
 	}
 	switch mode := fi.Mode(); {
 	case mode.IsDir():
-		// do directory stuff
 		return DIRECTORY, true
 	case mode.IsRegular():
-		// do file stuff
 		return FILE, true
 	}
 
